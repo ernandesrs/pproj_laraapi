@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\WithFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'users' => \App\Http\Resources\Admin\UserResource::collection(
+            'users' => UserResource::collection(
                 $this->applyFilter(\App\Models\User::class, $filterData, ['first_name'])
             )->response()->getData()
         ]);
@@ -41,7 +42,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'user' => $created
+            'user' => new UserResource($created)
         ]);
     }
 
@@ -59,11 +60,19 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a user
+     * @param \App\Http\Requests\Admin\UserFormRequest $request
+     * @param \App\Models\User $user
+     * @return mixed|\Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function update(\App\Http\Requests\Admin\UserFormRequest $request, \App\Models\User $user)
     {
-        //
+        $updated = UserService::update($user, $request->validated());
+
+        return response()->json([
+            'success' => true,
+            'updated' => new UserResource($updated)
+        ]);
     }
 
     /**

@@ -27,6 +27,7 @@ Route::group([
         Route::get('/', [\App\Http\Controllers\Api\Admin\UserController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\Api\Admin\UserController::class, 'store']);
         Route::get('/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'show']);
+        Route::put('/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'update']);
         Route::delete('/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'destroy']);
 
     });

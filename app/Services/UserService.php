@@ -19,4 +19,27 @@ class UserService extends BaseService
 
         return $createdUser;
     }
+
+    /**
+     * Update user
+     * @param User|\Illuminate\Auth\Authenticatable $user
+     * @param array $validated
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    static function update(mixed $user, array $validated = []): \Illuminate\Database\Eloquent\Model|null
+    {
+        if (empty($validated['password'])) {
+            unset($validated['password']);
+        }
+
+        if (!$user->update($validated)) {
+            return null;
+        }
+
+        $updatedUser = $user->fresh();
+
+        // Do something with $updatedUser.
+
+        return $updatedUser;
+    }
 }
