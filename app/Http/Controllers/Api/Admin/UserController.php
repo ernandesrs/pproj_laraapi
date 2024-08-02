@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\WithFilter;
 use App\Http\Controllers\Controller;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -30,11 +31,18 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a user
+     * @param \App\Http\Requests\Admin\UserFormRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(\App\Http\Requests\Admin\UserFormRequest $request): \Illuminate\Http\JsonResponse
     {
-        //
+        $created = UserService::create($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'user' => $created
+        ]);
     }
 
     /**
