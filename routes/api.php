@@ -20,4 +20,12 @@ Route::group([
 
     Route::get('/test', [\App\Http\Controllers\Api\Admin\TestController::class, 'test']);
 
+    Route::group([
+        'prefix' => 'users'
+    ], function () {
+
+        Route::get('/', [\App\Http\Controllers\Api\Admin\UserController::class, 'index']);
+
+    });
+
 });
