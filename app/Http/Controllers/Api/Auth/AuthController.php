@@ -3,22 +3,17 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
     /**
      * Login
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\AuthFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    function login(Request $request): \Illuminate\Http\JsonResponse
+    function login(\App\Http\Requests\AuthFormRequest $request): \Illuminate\Http\JsonResponse
     {
-        $validatedCredentials = $request->validate([
-            'email' => ['email', 'exists:users,email'],
-            'password' => ['string'],
-            'remember' => ['nullable', 'boolean']
-        ]);
+        $validatedCredentials = $request->validated();
 
         dump($validatedCredentials);
 
