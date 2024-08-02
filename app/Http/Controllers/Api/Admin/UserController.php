@@ -38,11 +38,16 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show a user
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(string $id)
+    public function show(\App\Models\User $user): \Illuminate\Http\JsonResponse
     {
-        //
+        return response()->json([
+            'success' => true,
+            'user' => new \App\Http\Resources\Admin\UserResource($user)
+        ]);
     }
 
     /**

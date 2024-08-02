@@ -25,6 +25,7 @@ Route::group([
     ], function () {
 
         Route::get('/', [\App\Http\Controllers\Api\Admin\UserController::class, 'index']);
+        Route::get('/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'show']);
 
     });
 
