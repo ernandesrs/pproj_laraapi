@@ -15,13 +15,19 @@ class AuthController extends Controller
     {
         $validatedCredentials = $request->validated();
 
-        dump($validatedCredentials);
+        throw_if(!\Auth::attempt(
+            ['email' => $validatedCredentials['email'], 'password' => $validatedCredentials['password']],
+            $validatedCredentials['remember']
+        ), \App\Exceptions\Api\Auth\LoginFailException::class);
+
+        $token = $request->user()->createToken('api_token_auth')->plainTextToken;
 
         return response()->json([
             'success' => true,
             'auth' => [
-                'token' => '',
-                'expiration' => ''
+                'token' => $token,
+                'fullToken' => "Bearer {$token}",
+                'expirationInMinutes' => config('sanctum.expiration')
             ]
         ]);
     }
