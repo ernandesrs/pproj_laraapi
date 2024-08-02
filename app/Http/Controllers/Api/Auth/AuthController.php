@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Login extends Controller
+class AuthController extends Controller
 {
     /**
-     * Login attempt
+     * Login
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    function attempt(Request $request): \Illuminate\Http\JsonResponse
+    function login(Request $request): \Illuminate\Http\JsonResponse
     {
         $validatedCredentials = $request->validate([
             'email' => ['email', 'exists:users,email'],
