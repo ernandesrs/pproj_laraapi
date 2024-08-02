@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    dd(\App\Models\Role::defaultRoles());
     return view('welcome');
 });
