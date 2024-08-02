@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\Api\Roles\RolesEnum;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // Run user seeder
+        (new UserSeeder())->run();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Create roles and permissions
+        Role::defaultRoles()->map(fn($dr) => Role::create(['guard_name' => 'web', 'name' => $dr->value]));
+
+        User::find(1)->assignRole(RolesEnum::SUPER_ADMIN);
+        User::find(2)->assignRole(RolesEnum::USER_ADMIN);
     }
 }
