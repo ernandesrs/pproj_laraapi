@@ -26,6 +26,7 @@ Route::group([
 
         Route::get('/', [\App\Http\Controllers\Api\Admin\UserController::class, 'index']);
         Route::get('/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'show']);
+        Route::delete('/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'destroy']);
 
     });
 

@@ -59,10 +59,14 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Destroy a user
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(string $id)
+    public function destroy(\App\Models\User $user)
     {
-        //
+        return response()->json([
+            'success' => $user->delete()
+        ]);
     }
 }
