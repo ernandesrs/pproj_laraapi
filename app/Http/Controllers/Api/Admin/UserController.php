@@ -23,7 +23,9 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'users' => $this->applyFilter(\App\Models\User::class, $filterData, ['first_name'])
+            'users' => \App\Http\Resources\Admin\UserResource::collection(
+                $this->applyFilter(\App\Models\User::class, $filterData, ['first_name'])
+            )->response()->getData()
         ]);
     }
 

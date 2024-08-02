@@ -8,13 +8,13 @@ trait WithFilter
      * Default limit
      * @var int
      */
-    public int $defaultLimit = 2;
+    public int $defaultLimit = 15;
 
     /**
      * Apply filter
      * @param string $modelClass
      * @param array $filterData
-     * @return void
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     function applyFilter(string $modelClass, array $filterData, array $searchableFields = [])
     {
