@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -23,6 +24,19 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
+        $this->renderable(function (\Exception $e, $request) {
+            if ($request->is('api/*')) {
+                $exceptionClass = get_class($e);
+
+                $customExceptionClass = match ($exceptionClass) {
+                    \Illuminate\Auth\AuthenticationException::class => \App\Exceptions\Api\Auth\UnauthenticatedException::class,
+                    default => null
+                };
+
+                throw_if($customExceptionClass, $customExceptionClass);
+            }
+        });
+
         $this->reportable(function (Throwable $e) {
             //
         });
