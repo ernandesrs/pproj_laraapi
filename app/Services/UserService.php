@@ -68,4 +68,27 @@ class UserService extends BaseService
 
         return $user;
     }
+
+    /**
+     * Send password reset link
+     * @param mixed $user
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    static function sendPasswordResetLink(mixed $user): \Illuminate\Database\Eloquent\Model|null
+    {
+        $resetToken = $user->tokens()->create([
+            'to' => 'password_reset',
+            'token' => md5(\Str::random())
+        ]);
+
+        if (!$resetToken) {
+            return null;
+        }
+
+        \Mail::to($user)->send(
+            new \App\Mail\Auth\PasswordResetLinkMail($user, $resetToken)
+        );
+
+        return $user;
+    }
 }

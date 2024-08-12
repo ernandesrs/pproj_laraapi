@@ -20,6 +20,15 @@ Route::group([
 
     });
 
+    Route::group([
+        'prefix' => 'password'
+    ], function () {
+
+        Route::post('/send-link', [\App\Http\Controllers\Api\Auth\PasswordController::class, 'sendLink']);
+        Route::post('/reset', [\App\Http\Controllers\Api\Auth\PasswordController::class, 'reset']);
+
+    });
+
 });
 
 Route::group([
