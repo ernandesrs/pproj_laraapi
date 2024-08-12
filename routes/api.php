@@ -11,6 +11,15 @@ Route::group([
     Route::post('/login', [\App\Http\Controllers\Api\Auth\AuthController::class, 'login'])->middleware(['guest']);
     Route::post('/logout', [\App\Http\Controllers\Api\Auth\AuthController::class, 'logout'])->middleware(['auth:sanctum']);
 
+    Route::group([
+        'prefix' => 'verification'
+    ], function () {
+
+        Route::post('/verify', [\App\Http\Controllers\Api\Auth\VerificationController::class, 'verify']);
+        Route::post('/resend', [\App\Http\Controllers\Api\Auth\VerificationController::class, 'resend']);
+
+    });
+
 });
 
 Route::group([
