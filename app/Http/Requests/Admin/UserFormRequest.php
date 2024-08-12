@@ -38,7 +38,8 @@ class UserFormRequest extends FormRequest
             ] : [
                 'username' => ['required', 'string', 'min:2', 'max:25', 'unique:users,username'],
                 'email' => ['required', 'email', 'unique:users,email'],
-                'password' => ['required', 'string', 'confirmed']
+                'password' => ['required', 'string', 'confirmed'],
+                'send_verification_mail' => ['nullable', 'boolean']
             ])
         ];
 

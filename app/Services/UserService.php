@@ -16,6 +16,16 @@ class UserService extends BaseService
         $createdUser = User::create($validated);
 
         // Do something with $createdUser, like send verification email, etc.
+        if (isset($validated['send_verification_mail']) && $validated['send_verification_mail']) {
+            // Generate a verification token
+            $createdUser->verification_token = \Str::random();
+            $createdUser->save();
+
+            // Send verification mail
+            \Mail::to($createdUser)->send(
+                new \App\Mail\Auth\EmailVerificationMail($createdUser)
+            );
+        }
 
         return $createdUser;
     }
