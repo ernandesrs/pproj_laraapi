@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/mailable', function () {
+    // $invoice = App\Models\Invoice::find(1);
+    // return new App\Mail\InvoicePaid($invoice);
+
+    return new \App\Mail\Auth\EmailVerificationMail(\App\Models\User::find(2));
+});
