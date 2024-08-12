@@ -53,13 +53,17 @@ class UserService extends BaseService
      */
     static function sendVerificationEmail(mixed $user): \Illuminate\Database\Eloquent\Model|null
     {
-        $user->verification_token = \Str::random();
-        if (!$user->save()) {
+        $verificationToken = $user->tokens()->create([
+            'to' => 'email_verification',
+            'token' => md5(\Str::random())
+        ]);
+
+        if (!$verificationToken) {
             return null;
         }
 
         \Mail::to($user)->send(
-            new \App\Mail\Auth\EmailVerificationMail($user)
+            new \App\Mail\Auth\EmailVerificationMail($user, $verificationToken)
         );
 
         return $user;

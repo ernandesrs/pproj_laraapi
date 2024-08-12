@@ -3,6 +3,7 @@
 namespace App\Mail\Auth;
 
 use App\Models\User;
+use App\Models\UserToken;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -17,7 +18,7 @@ class EmailVerificationMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public User $user)
+    public function __construct(public User $user, public UserToken $userToken)
     {
         //
     }
@@ -40,7 +41,7 @@ class EmailVerificationMail extends Mailable
         return new Content(
             markdown: 'mail.auth.email-verification',
             with: [
-                'verification_link' => config('app.url') . '/auth/email-verification?token=' . \Str::toBase64($this->user->verification_token)
+                'verification_link' => config('app.url') . '/auth/email-verification?token=' . \Str::toBase64($this->userToken->token)
             ]
         );
     }

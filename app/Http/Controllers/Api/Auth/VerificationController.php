@@ -24,15 +24,18 @@ class VerificationController extends Controller
         throw_if($validator->fails(), new \App\Exceptions\Api\InvalidDataException());
 
         $validated = $validator->validated();
-        $userToVerify = User::where('email', '=', $validated['email'])
-            ->where('verification_token', '=', \Str::fromBase64($validated['token']))
-            ->first();
+        $userToVerify = User::where('email', '=', $validated['email'])->firstOrFail();
+        $userToken = $userToVerify
+            ->tokens()
+            ->where('to', '=', 'email_verification')
+            ->where('token', '=', \Str::fromBase64($validated['token']))->first();
 
-        throw_if(!$userToVerify, new \App\Exceptions\Api\Auth\InvalidVerificationToken());
+        throw_if(!$userToken, new \App\Exceptions\Api\Auth\InvalidVerificationToken());
 
         $userToVerify->email_verified_at = now();
-        $userToVerify->verification_token = null;
-        $userToVerify->save();
+        if ($userToVerify->save()) {
+            $userToken->delete();
+        }
 
         return response()->json([
             'success' => true
@@ -58,6 +61,18 @@ class VerificationController extends Controller
             ->first();
 
         throw_if(!$userToResend, new \App\Exceptions\Api\Auth\EmailHasAlreadyBeenVerifiedException());
+
+        $userToken = $userToResend
+            ->tokens()
+            ->where('to', '=', 'email_verification')
+            ->first();
+
+        $minMinutesToResend = 5;
+        if ($userToken) {
+            throw_if($userToken->created_at >= now()->subMinutes($minMinutesToResend), new \App\Exceptions\Api\Auth\VerificationEmailHasBeenSentException());
+
+            $userToken->delete();
+        }
 
         $userToResend = UserService::sendVerificationEmail($userToResend);
 

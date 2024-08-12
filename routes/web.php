@@ -21,5 +21,5 @@ Route::get('/mailable', function () {
     // $invoice = App\Models\Invoice::find(1);
     // return new App\Mail\InvoicePaid($invoice);
 
-    return new \App\Mail\Auth\EmailVerificationMail(\App\Models\User::find(2));
+    // return new \App\Mail\Auth\EmailVerificationMail(\App\Models\User::find(2));
 });
