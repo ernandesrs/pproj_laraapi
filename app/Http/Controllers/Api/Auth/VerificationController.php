@@ -30,7 +30,7 @@ class VerificationController extends Controller
             ->where('to', '=', 'email_verification')
             ->where('token', '=', \Str::fromBase64($validated['token']))->first();
 
-        throw_if(!$userToken, new \App\Exceptions\Api\Auth\InvalidVerificationToken());
+        throw_if(!$userToken, new \App\Exceptions\Api\Auth\InvalidTokenException());
 
         $userToVerify->email_verified_at = now();
         if ($userToVerify->save()) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserToken;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -48,11 +49,25 @@ class PasswordController extends Controller
 
     /**
      * Reset password
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\PasswordResetRequest $request
      * @return mixed|\Illuminate\Http\JsonResponse
      */
-    function reset(Request $request)
+    function reset(\App\Http\Requests\PasswordResetRequest $request)
     {
+        $validated = $request->validated();
+
+        $userToken = UserToken::where('to', 'password_reset')
+            ->where('token', \Str::fromBase64($validated['token']))
+            ->first();
+
+        throw_if(!$userToken, new \App\Exceptions\Api\Auth\InvalidTokenException());
+
+        $user = $userToken->user()->firstOrFail();
+        $user->password = $validated['password'];
+        $user->save();
+
+        $userToken->delete();
+
         return response()->json([
             'success' => true
         ]);

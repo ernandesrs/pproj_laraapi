@@ -5,7 +5,7 @@ namespace App\Exceptions\Api\Auth;
 use App\Exceptions\Api\BaseException;
 use Exception;
 
-class InvalidVerificationToken extends Exception
+class InvalidTokenException extends Exception
 {
     use BaseException;
 
