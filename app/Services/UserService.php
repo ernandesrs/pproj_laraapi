@@ -17,14 +17,7 @@ class UserService extends BaseService
 
         // Do something with $createdUser, like send verification email, etc.
         if (isset($validated['send_verification_mail']) && $validated['send_verification_mail']) {
-            // Generate a verification token
-            $createdUser->verification_token = \Str::random();
-            $createdUser->save();
-
-            // Send verification mail
-            \Mail::to($createdUser)->send(
-                new \App\Mail\Auth\EmailVerificationMail($createdUser)
-            );
+            $createdUser = self::sendVerificationEmail($createdUser);
         }
 
         return $createdUser;
@@ -51,5 +44,24 @@ class UserService extends BaseService
         // Do something with $updatedUser.
 
         return $updatedUser;
+    }
+
+    /**
+     * Generate a verification token to user
+     * @param User|\Illuminate\Auth\Authenticatable $user
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    static function sendVerificationEmail(mixed $user): \Illuminate\Database\Eloquent\Model|null
+    {
+        $user->verification_token = \Str::random();
+        if (!$user->save()) {
+            return null;
+        }
+
+        \Mail::to($user)->send(
+            new \App\Mail\Auth\EmailVerificationMail($user)
+        );
+
+        return $user;
     }
 }

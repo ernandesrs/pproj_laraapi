@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class VerificationController extends Controller
@@ -45,6 +46,21 @@ class VerificationController extends Controller
      */
     function resend(Request $request)
     {
+        $validator = \Validator::make($request->only(['email']), [
+            'email' => ['required', 'email', 'exists:users,email']
+        ]);
+
+        throw_if($validator->fails(), new \App\Exceptions\Api\InvalidDataException());
+
+        $validated = $validator->validated();
+        $userToResend = User::where('email', '=', $validated['email'])
+            ->whereNull('email_verified_at')
+            ->first();
+
+        throw_if(!$userToResend, new \App\Exceptions\Api\Auth\EmailHasAlreadyBeenVerifiedException());
+
+        $userToResend = UserService::sendVerificationEmail($userToResend);
+
         return response()->json([
             'success' => true
         ]);
