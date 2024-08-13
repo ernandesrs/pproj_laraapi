@@ -33,5 +33,10 @@ class DatabaseSeeder extends Seeder
                 Permission::create(['guard_name' => 'web', 'name' => $permission->value]);
             });
         });
+
+        // Give all permissions to super user role
+        Role::findByName(RolesEnum::SUPER_ADMIN->value)->givePermissionTo(
+            Permission::all()
+        );
     }
 }

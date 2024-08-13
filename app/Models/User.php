@@ -34,7 +34,6 @@ class User extends Authenticatable
         'username',
         'gender',
         'avatar',
-        'verification_token',
         'email',
         'password',
     ];
