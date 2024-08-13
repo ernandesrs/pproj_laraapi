@@ -39,8 +39,6 @@ class UserPolicy extends BasePolicy
             return false;
         }
 
-        // checkar cargos iguais
-
         return true;
     }
 
@@ -64,8 +62,6 @@ class UserPolicy extends BasePolicy
         if (!$user->hasPermissionTo($this->permissionsEnumClass()::DELETE)) {
             return false;
         }
-
-        // checkar cargos iguais
 
         return true;
     }
