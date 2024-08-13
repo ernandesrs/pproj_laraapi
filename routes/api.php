@@ -51,6 +51,7 @@ Route::group([
 ], function () {
 
     Route::get('/', [\App\Http\Controllers\Api\MeController::class, 'me']);
+    Route::put('/', [\App\Http\Controllers\Api\MeController::class, 'update']);
 
 });
 

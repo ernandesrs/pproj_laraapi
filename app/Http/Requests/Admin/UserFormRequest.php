@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\BaseRequest;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserFormRequest extends FormRequest
@@ -27,7 +28,7 @@ class UserFormRequest extends FormRequest
         $rules = [
             'first_name' => ['required', 'string', 'min:2', 'max:25'],
             'last_name' => ['required', 'string', 'min:2', 'max:50'],
-            'gender' => ['required', \Illuminate\Validation\Rule::in(['n', 'f', 'm'])]
+            'gender' => ['required', \Illuminate\Validation\Rule::in(User::ALLOWED_GENDERS)]
         ];
 
         $rules = [

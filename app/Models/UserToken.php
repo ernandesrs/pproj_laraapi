@@ -20,6 +20,15 @@ class UserToken extends Model
     ];
 
     /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'token'
+    ];
+
+    /**
      * User
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

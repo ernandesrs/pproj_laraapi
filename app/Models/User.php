@@ -14,6 +14,16 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
+     * Allowed genders
+     * @var array
+     */
+    const ALLOWED_GENDERS = [
+        'n', // none/undefined
+        'f', // female
+        'm' // male
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
