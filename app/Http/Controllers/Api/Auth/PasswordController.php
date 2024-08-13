@@ -26,7 +26,7 @@ class PasswordController extends Controller
         $userToSendLink = User::where('email', '=', $validator->validated()['email'])->firstOrFail();
 
         $userToken = $userToSendLink
-            ->tokens()
+            ->userTokens()
             ->where('to', '=', 'password_reset')
             ->first();
 

@@ -26,7 +26,7 @@ class VerificationController extends Controller
         $validated = $validator->validated();
         $userToVerify = User::where('email', '=', $validated['email'])->firstOrFail();
         $userToken = $userToVerify
-            ->tokens()
+            ->userTokens()
             ->where('to', '=', 'email_verification')
             ->where('token', '=', \Str::fromBase64($validated['token']))->first();
 
@@ -63,7 +63,7 @@ class VerificationController extends Controller
         throw_if(!$userToResend, new \App\Exceptions\Api\Auth\EmailHasAlreadyBeenVerifiedException());
 
         $userToken = $userToResend
-            ->tokens()
+            ->userTokens()
             ->where('to', '=', 'email_verification')
             ->first();
 

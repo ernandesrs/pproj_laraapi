@@ -68,7 +68,7 @@ class UserService extends BaseService
      */
     static function sendVerificationEmail(mixed $user): \Illuminate\Database\Eloquent\Model|null
     {
-        $verificationToken = $user->tokens()->create([
+        $verificationToken = $user->userTokens()->create([
             'to' => 'email_verification',
             'token' => md5(\Str::random())
         ]);
@@ -91,7 +91,7 @@ class UserService extends BaseService
      */
     static function sendPasswordResetLink(mixed $user): \Illuminate\Database\Eloquent\Model|null
     {
-        $resetToken = $user->tokens()->create([
+        $resetToken = $user->userTokens()->create([
             'to' => 'password_reset',
             'token' => md5(\Str::random())
         ]);
