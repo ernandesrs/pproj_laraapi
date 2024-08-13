@@ -54,6 +54,15 @@ Route::group([
     Route::put('/', [\App\Http\Controllers\Api\MeController::class, 'update']);
     Route::delete('/', [\App\Http\Controllers\Api\MeController::class, 'delete']);
 
+    Route::group([
+        'prefix' => 'avatar'
+    ], function () {
+
+        Route::post('/', [\App\Http\Controllers\Api\MeController::class, 'avatarUpload']);
+        Route::delete('/', [\App\Http\Controllers\Api\MeController::class, 'avatarDelete']);
+
+    });
+
 });
 
 /**

@@ -86,7 +86,7 @@ class UserService extends BaseService
 
     /**
      * Send password reset link
-     * @param mixed $user
+     * @param User|\Illuminate\Auth\Authenticatable $user
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     static function sendPasswordResetLink(mixed $user): \Illuminate\Database\Eloquent\Model|null
@@ -105,5 +105,45 @@ class UserService extends BaseService
         );
 
         return $user;
+    }
+
+    /**
+     * Summary of updateAvatar
+     * @param User|\Illuminate\Auth\Authenticatable $user
+     * @param array $validated
+     * @return string|null
+     */
+    static function updateAvatar(mixed $user, array $validated): string|null
+    {
+        if ($user->avatar) {
+            // delete old avatar
+            self::deleteAvatar($user);
+        }
+
+        /**
+         * @var \Illuminate\Http\UploadedFile $avatar
+         */
+        $avatar = $validated['file'];
+        $user->avatar = $avatar->store('avatars');
+
+        is_string($user->avatar) ? $user->save() : $user->avatar = null;
+
+        return $user->avatar;
+    }
+
+    /**
+     * Delete avatar
+     * @param mixed $user
+     * @return bool
+     */
+    static function deleteAvatar(mixed $user): bool
+    {
+        if ($user->avatar && \Storage::fileExists($user->avatar)) {
+            \Storage::delete($user->avatar);
+        }
+
+        $user->avatar = null;
+
+        return $user->save();
     }
 }

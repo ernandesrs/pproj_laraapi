@@ -52,4 +52,19 @@ class MeController extends Controller
             'success' => true
         ]);
     }
+
+    /**
+     * Avatar upload
+     * @param \App\Http\Requests\AvatarRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function avatarUpload(\App\Http\Requests\AvatarRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $path = UserService::updateAvatar(\Auth::user(), $request->validated());
+
+        return response()->json([
+            'success' => true,
+            'avatar_url' => \Storage::url($path)
+        ]);
+    }
 }
