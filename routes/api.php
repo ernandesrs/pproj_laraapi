@@ -91,4 +91,12 @@ Route::group([
 
     });
 
+    Route::group([
+        'prefix' => 'roles'
+    ], function () {
+
+        Route::get('', [\App\Http\Controllers\Api\Admin\RoleController::class, 'index']);
+
+    });
+
 });

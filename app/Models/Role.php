@@ -15,9 +15,7 @@ class Role extends \Spatie\Permission\Models\Role
      */
     protected $hidden = [
         'guard_name',
-        'pivot',
-        'created_at',
-        'updated_at'
+        'pivot'
     ];
 
     /**
