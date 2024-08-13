@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\Api\Permissions\UserPermissionsEnum;
+use App\Enums\Api\Roles\RolesEnum;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,14 +26,22 @@ class UserPolicy extends BasePolicy
      */
     function update(User $user, Model $model): bool
     {
-        // Prevents edit of own account
+        // Prevents edition of own account
         if ($user->id == $model->id) {
             return false;
         }
 
-        // Check if the logged in user can edit this user
+        if ($this->isSuperUser($user)) {
+            return true;
+        }
 
-        return $this->update($user, $model);
+        if (!$user->hasPermissionTo($this->permissionsEnumClass()::UPDATE)) {
+            return false;
+        }
+
+        // checkar cargos iguais
+
+        return true;
     }
 
     /**
@@ -48,8 +57,16 @@ class UserPolicy extends BasePolicy
             return false;
         }
 
-        // Check if the logged in user can delete this user
+        if ($this->isSuperUser($user)) {
+            return true;
+        }
 
-        return parent::delete($user, $model);
+        if (!$user->hasPermissionTo($this->permissionsEnumClass()::DELETE)) {
+            return false;
+        }
+
+        // checkar cargos iguais
+
+        return true;
     }
 }
