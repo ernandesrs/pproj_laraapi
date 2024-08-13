@@ -4,6 +4,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/test', [\App\Http\Controllers\Api\TestController::class, 'test'])->name('api.test');
 
+/**
+ *
+ *
+ * Auth
+ *
+ *
+ */
 Route::group([
     'prefix' => 'auth'
 ], function () {
@@ -31,6 +38,29 @@ Route::group([
 
 });
 
+/**
+ *
+ *
+ * Me
+ *
+ *
+ */
+Route::group([
+    'prefix' => 'me',
+    'middleware' => ['auth:sanctum']
+], function () {
+
+    Route::get('/', [\App\Http\Controllers\Api\MeController::class, 'me']);
+
+});
+
+/**
+ *
+ *
+ * Admin
+ *
+ *
+ */
 Route::group([
     'prefix' => 'admin',
     'middleware' => ['auth:sanctum']
