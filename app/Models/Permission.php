@@ -10,6 +10,17 @@ class Permission extends \Spatie\Permission\Models\Permission
     use HasFactory;
 
     /**
+     * Hidden fields
+     * @var array
+     */
+    protected $hidden = [
+        'guard_name',
+        'pivot',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
      * Allowed permissions
      * @return \Illuminate\Support\Collection
      */

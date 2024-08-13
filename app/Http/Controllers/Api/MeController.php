@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\UserResource;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,17 @@ class MeController extends Controller
      */
     function me(): \Illuminate\Http\JsonResponse
     {
+        $me = \Auth::user();
+        $roles = $me->roles()->get();
+
+        $roles->map(function ($role) {
+            $role->permissions;
+        });
+
         return response()->json([
             'success' => true,
-            'me' => \Auth::user()
+            'me' => new UserResource($me),
+            'roles' => $roles
         ]);
     }
 

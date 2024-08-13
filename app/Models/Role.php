@@ -10,6 +10,17 @@ class Role extends \Spatie\Permission\Models\Role
     use HasFactory;
 
     /**
+     * Hidden fields
+     * @var array
+     */
+    protected $hidden = [
+        'guard_name',
+        'pivot',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
      * Default roles
      * @return \Illuminate\Support\Collection
      */
