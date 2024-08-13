@@ -67,7 +67,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    function tokens()
+    function userTokens()
     {
         return $this->hasMany(UserToken::class);
     }

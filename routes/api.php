@@ -52,6 +52,7 @@ Route::group([
 
     Route::get('/', [\App\Http\Controllers\Api\MeController::class, 'me']);
     Route::put('/', [\App\Http\Controllers\Api\MeController::class, 'update']);
+    Route::delete('/', [\App\Http\Controllers\Api\MeController::class, 'delete']);
 
 });
 

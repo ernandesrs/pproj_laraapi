@@ -47,6 +47,21 @@ class UserService extends BaseService
     }
 
     /**
+     * Delete user
+     * @param User|\Illuminate\Auth\Authenticatable $user
+     * @param mixed $user
+     * @return bool
+     */
+    static function delete(mixed $user): bool
+    {
+        // remove photo
+
+        // do something
+
+        return $user->delete();
+    }
+
+    /**
      * Generate a verification token to user
      * @param User|\Illuminate\Auth\Authenticatable $user
      * @return \Illuminate\Database\Eloquent\Model|null

@@ -34,4 +34,22 @@ class MeController extends Controller
             'me' => $updatedMe
         ]);
     }
+
+    /**
+     * Delete user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function delete(): \Illuminate\Http\JsonResponse
+    {
+        throw_if(
+            \Auth::user()->hasRole(\App\Enums\Api\Roles\RolesEnum::SUPER_ADMIN),
+            new \App\Exceptions\Api\UnauthorizedActionException()
+        );
+
+        UserService::delete(\Auth::user());
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
 }
