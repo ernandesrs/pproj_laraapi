@@ -67,4 +67,17 @@ class MeController extends Controller
             'avatar_url' => \Storage::url($path)
         ]);
     }
+
+    /**
+     * Avatar delete
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function avatarDelete(): \Illuminate\Http\JsonResponse
+    {
+        UserService::deleteAvatar(\Auth::user());
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
 }
