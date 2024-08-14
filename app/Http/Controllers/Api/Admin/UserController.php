@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\WithFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\RoleResource;
 use App\Http\Resources\Admin\UserResource;
 use App\Models\Role;
 use App\Models\User;
@@ -130,6 +131,22 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true
+        ]);
+    }
+
+    /**
+     * User roles
+     * @param \App\Models\User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function roles(User $user): \Illuminate\Http\JsonResponse
+    {
+        $this->authorize('view', $user);
+
+        return response()->json([
+            'success' => true,
+            'user' => new UserResource($user),
+            'roles' => RoleResource::collection($user->roles()->get())
         ]);
     }
 }
