@@ -98,9 +98,16 @@ Route::group([
         Route::get('/', [\App\Http\Controllers\Api\Admin\RoleController::class, 'index']);
         Route::post('/', [\App\Http\Controllers\Api\Admin\RoleController::class, 'store']);
         Route::get('/{role}', [\App\Http\Controllers\Api\Admin\RoleController::class, 'show']);
-        Route::patch('/{role}/give-permissions', [\App\Http\Controllers\Api\Admin\RoleController::class, 'givePermissions']);
-        Route::patch('/{role}/revoke-permissions', [\App\Http\Controllers\Api\Admin\RoleController::class, 'revokePermissions']);
         Route::delete('/{role}', [\App\Http\Controllers\Api\Admin\RoleController::class, 'destroy']);
+
+        Route::group([
+            'prefix' => 'permissions'
+        ], function () {
+
+            Route::patch('/{role}/give', [\App\Http\Controllers\Api\Admin\RoleController::class, 'givePermissions']);
+            Route::patch('/{role}/revoke', [\App\Http\Controllers\Api\Admin\RoleController::class, 'revokePermissions']);
+
+        });
 
     });
 
