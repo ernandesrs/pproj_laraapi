@@ -104,14 +104,8 @@ Route::group([
         Route::get('/{role}', [\App\Http\Controllers\Api\Admin\RoleController::class, 'show']);
         Route::delete('/{role}', [\App\Http\Controllers\Api\Admin\RoleController::class, 'destroy']);
 
-        Route::group([
-            'prefix' => 'permissions'
-        ], function () {
-
-            Route::patch('/{role}/give', [\App\Http\Controllers\Api\Admin\RoleController::class, 'givePermissions']);
-            Route::patch('/{role}/revoke', [\App\Http\Controllers\Api\Admin\RoleController::class, 'revokePermissions']);
-
-        });
+        Route::patch('/{role}/permissions/give', [\App\Http\Controllers\Api\Admin\RoleController::class, 'givePermissions']);
+        Route::patch('/{role}/permissions/revoke', [\App\Http\Controllers\Api\Admin\RoleController::class, 'revokePermissions']);
 
     });
 
