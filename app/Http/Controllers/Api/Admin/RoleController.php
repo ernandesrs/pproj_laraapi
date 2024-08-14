@@ -31,8 +31,24 @@ class RoleController extends Controller
 
         return response()->json([
             'success' => true,
-            'roles' => RoleResource::collection($roles),
+            'roles' => RoleResource::collection($roles)->response()->getData(),
             'available_permissions' => Permission::avaiablePermissions(true)
+        ]);
+    }
+
+    /**
+     * Show
+     * @param \App\Models\Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function show(Role $role): \Illuminate\Http\JsonResponse
+    {
+        $this->authorize('view', $role);
+
+        return response()->json([
+            'success' => true,
+            'role' => new RoleResource($role),
+            'avaiable_permissions' => Permission::avaiablePermissions(true)
         ]);
     }
 
