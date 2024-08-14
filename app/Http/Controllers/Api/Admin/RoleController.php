@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Exceptions\Api\InvalidDataException;
 use App\Http\Controllers\Api\WithFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GiveOrRevokePemissionRequest;
@@ -33,6 +34,32 @@ class RoleController extends Controller
             'success' => true,
             'roles' => RoleResource::collection($roles)->response()->getData(),
             'available_permissions' => Permission::avaiablePermissions(true)
+        ]);
+    }
+
+    /**
+     * Store a role
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function store(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $this->authorize('create', Role::class);
+
+        $validator = \Validator::make($request->only(['name']), [
+            'name' => ['required', 'string', 'unique:roles,name']
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash("validator_errors", $validator->errors());
+            throw new InvalidDataException();
+        }
+
+        $created = Role::create($validator->validate());
+
+        return response()->json([
+            'success' => true,
+            'role' => new RoleResource($created)
         ]);
     }
 
