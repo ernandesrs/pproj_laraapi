@@ -100,6 +100,7 @@ Route::group([
         Route::get('/{role}', [\App\Http\Controllers\Api\Admin\RoleController::class, 'show']);
         Route::patch('/{role}/give-permissions', [\App\Http\Controllers\Api\Admin\RoleController::class, 'givePermissions']);
         Route::patch('/{role}/revoke-permissions', [\App\Http\Controllers\Api\Admin\RoleController::class, 'revokePermissions']);
+        Route::delete('/{role}', [\App\Http\Controllers\Api\Admin\RoleController::class, 'destroy']);
 
     });
 

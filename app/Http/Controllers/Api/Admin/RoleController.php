@@ -55,7 +55,10 @@ class RoleController extends Controller
             throw new InvalidDataException();
         }
 
-        $created = Role::create($validator->validate());
+        $created = Role::create([
+            ...$validator->validate(),
+            'guard_name' => 'web'
+        ]);
 
         return response()->json([
             'success' => true,
@@ -116,6 +119,22 @@ class RoleController extends Controller
          */
         $permissionsToRevoke = $validated['permissions'];
         $permissionsToRevoke->map(fn($permissionToRevoke) => $role->revokePermissionTo($permissionToRevoke));
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * Destroy a role
+     * @param \App\Models\Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function destroy(Role $role): \Illuminate\Http\JsonResponse
+    {
+        $this->authorize('delete', $role);
+
+        $role->delete();
 
         return response()->json([
             'success' => true
