@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\WithFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\UserResource;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -89,12 +90,46 @@ class UserController extends Controller
      * @param \App\Models\User $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(User $user)
+    public function destroy(User $user): \Illuminate\Http\JsonResponse
     {
         $this->authorize('delete', $user);
 
         return response()->json([
             'success' => $user->delete()
+        ]);
+    }
+
+    /**
+     * Assign role to user
+     * @param \App\Models\User $user
+     * @param \App\Models\Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function assignRole(User $user, Role $role): \Illuminate\Http\JsonResponse
+    {
+        $this->authorize('update', $user);
+
+        $user->assignRole($role);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * Remove role to user
+     * @param \App\Models\User $user
+     * @param \App\Models\Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeRole(User $user, Role $role): \Illuminate\Http\JsonResponse
+    {
+        $this->authorize('update', $user);
+
+        $user->removeRole($role);
+
+        return response()->json([
+            'success' => true
         ]);
     }
 }

@@ -89,6 +89,9 @@ Route::group([
         Route::put('/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'update']);
         Route::delete('/{user}', [\App\Http\Controllers\Api\Admin\UserController::class, 'destroy']);
 
+        Route::patch('/{user}/roles/{role}/assign', [\App\Http\Controllers\Api\Admin\UserController::class, 'assignRole']);
+        Route::patch('/{user}/roles/{role}/remove', [\App\Http\Controllers\Api\Admin\UserController::class, 'removeRole']);
+
     });
 
     Route::group([
