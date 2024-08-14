@@ -108,7 +108,7 @@ class UserController extends Controller
      */
     public function assignRole(User $user, Role $role): \Illuminate\Http\JsonResponse
     {
-        $this->authorize('update', $user);
+        $this->authorize('editRole', $user);
 
         $user->assignRole($role);
 
@@ -125,7 +125,7 @@ class UserController extends Controller
      */
     public function removeRole(User $user, Role $role): \Illuminate\Http\JsonResponse
     {
-        $this->authorize('update', $user);
+        $this->authorize('editRole', $user);
 
         $user->removeRole($role);
 

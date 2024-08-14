@@ -10,4 +10,5 @@ enum UserPermissionsEnum: string
     case UPDATE = 'update_user';
     case DELETE = 'delete_user';
     case DELETE_MANY = 'delete_many_users';
+    case EDIT_ROLE = 'edit_user_roles';
 }

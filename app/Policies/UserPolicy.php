@@ -65,4 +65,24 @@ class UserPolicy extends BasePolicy
 
         return true;
     }
+
+    /**
+     * User role edit authorization check
+     * @param \App\Models\User $user
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return bool
+     */
+    function editRole(User $user, Model $model): bool
+    {
+        // Prevents role edit of own account
+        if ($user->id == $model->id) {
+            return false;
+        }
+
+        if ($this->isSuperUser($user)) {
+            return true;
+        }
+
+        return $user->hasPermissionTo(UserPermissionsEnum::EDIT_ROLE);
+    }
 }
