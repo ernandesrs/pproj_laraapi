@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\WithFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\RoleResource;
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,8 @@ class RoleController extends Controller
 
         return response()->json([
             'success' => true,
-            'roles' => RoleResource::collection($roles)
+            'roles' => RoleResource::collection($roles),
+            'available_permissions' => Permission::avaiablePermissions(true)
         ]);
     }
 }
