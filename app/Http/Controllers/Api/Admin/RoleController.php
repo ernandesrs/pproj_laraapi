@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\WithFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\GiveOrRevokePemissionRequest;
 use App\Http\Resources\Admin\RoleResource;
 use App\Models\Permission;
 use App\Models\Role;
@@ -32,6 +33,45 @@ class RoleController extends Controller
             'success' => true,
             'roles' => RoleResource::collection($roles),
             'available_permissions' => Permission::avaiablePermissions(true)
+        ]);
+    }
+
+    /**
+     *
+     * Give permissions
+     * @param \App\Http\Requests\Admin\GiveOrRevokePemissionRequest $request
+     * @param \App\Models\Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function givePermissions(GiveOrRevokePemissionRequest $request, Role $role): \Illuminate\Http\JsonResponse
+    {
+        $validated = $request->validated();
+
+        $role->givePermissionTo($validated['permissions']);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * Revoke permissions
+     * @param \App\Http\Requests\Admin\GiveOrRevokePemissionRequest $request
+     * @param \App\Models\Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function revokePermissions(GiveOrRevokePemissionRequest $request, Role $role): \Illuminate\Http\JsonResponse
+    {
+        $validated = $request->validated();
+
+        /**
+         * @var \Illuminate\Support\Collection $permissionsToRevoke
+         */
+        $permissionsToRevoke = $validated['permissions'];
+        $permissionsToRevoke->map(fn($permissionToRevoke) => $role->revokePermissionTo($permissionToRevoke));
+
+        return response()->json([
+            'success' => true
         ]);
     }
 }

@@ -95,7 +95,9 @@ Route::group([
         'prefix' => 'roles'
     ], function () {
 
-        Route::get('', [\App\Http\Controllers\Api\Admin\RoleController::class, 'index']);
+        Route::get('/', [\App\Http\Controllers\Api\Admin\RoleController::class, 'index']);
+        Route::patch('/{role}/give-permissions', [\App\Http\Controllers\Api\Admin\RoleController::class, 'givePermissions']);
+        Route::patch('/{role}/revoke-permissions', [\App\Http\Controllers\Api\Admin\RoleController::class, 'revokePermissions']);
 
     });
 
