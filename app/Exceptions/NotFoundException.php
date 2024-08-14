@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Exceptions\Api\Auth;
+namespace App\Exceptions;
 
-use App\Exceptions\Api\BaseException;
 use Exception;
 
-class EmailHasAlreadyBeenVerifiedException extends Exception
+class NotFoundException extends Exception
 {
     use BaseException;
 
@@ -15,7 +14,7 @@ class EmailHasAlreadyBeenVerifiedException extends Exception
      */
     function message(): string
     {
-        return 'Email is already verified.';
+        return 'Not found.';
     }
 
     /**
@@ -24,6 +23,6 @@ class EmailHasAlreadyBeenVerifiedException extends Exception
      */
     function status(): int
     {
-        return 401;
+        return 404;
     }
 }

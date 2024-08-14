@@ -26,8 +26,8 @@ class Permission extends \Spatie\Permission\Models\Permission
     static function avaiablePermissions(bool $unnamedKey = false): Collection
     {
         $permissions = Collection::make([]);
-        $namespaceBase = '\App\Enums\Api\Permissions';
-        $basePath = app_path('\Enums\Api\Permissions');
+        $namespaceBase = '\App\Enums\Permissions';
+        $basePath = app_path('\Enums\Permissions');
 
         Collection::make(\File::allFiles($basePath))->map(function ($v, $k) use ($namespaceBase, &$permissions, $unnamedKey) {
             $enumClass = $namespaceBase . (empty($v->getRelativePath()) ? '' : '\\') . $v->getRelativePath() . '\\' . $v->getFilenameWithoutExtension();

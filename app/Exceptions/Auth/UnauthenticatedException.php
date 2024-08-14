@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Exceptions\Api;
+namespace App\Exceptions\Auth;
 
+use App\Exceptions\BaseException;
 use Exception;
 
-class UnauthorizedActionException extends Exception
+class UnauthenticatedException extends Exception
 {
     use BaseException;
 
@@ -14,7 +15,7 @@ class UnauthorizedActionException extends Exception
      */
     function message(): string
     {
-        return 'This action is not authorized.';
+        return 'You are not authenticated.';
     }
 
     /**
@@ -23,6 +24,6 @@ class UnauthorizedActionException extends Exception
      */
     function status(): int
     {
-        return 403;
+        return 401;
     }
 }

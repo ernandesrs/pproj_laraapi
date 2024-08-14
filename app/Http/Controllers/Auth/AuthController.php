@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 
@@ -18,7 +18,7 @@ class AuthController extends Controller
         throw_if(!\Auth::attempt(
             ['email' => $validatedCredentials['email'], 'password' => $validatedCredentials['password']],
             $validatedCredentials['remember']
-        ), \App\Exceptions\Api\Auth\LoginFailException::class);
+        ), \App\Exceptions\Auth\LoginFailException::class);
 
         $token = $request->user()->createToken('api_token_auth')->plainTextToken;
 

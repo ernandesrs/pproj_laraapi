@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Exceptions\Api\Auth;
+namespace App\Exceptions\Auth;
 
-use App\Exceptions\Api\BaseException;
+use App\Exceptions\BaseException;
 use Exception;
 
 class InvalidTokenException extends Exception

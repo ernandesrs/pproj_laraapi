@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
+use App\Enums\Roles\RolesEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\UserResource;
 use App\Services\UserService;
@@ -51,8 +52,8 @@ class MeController extends Controller
     function delete(): \Illuminate\Http\JsonResponse
     {
         throw_if(
-            \Auth::user()->hasRole(\App\Enums\Api\Roles\RolesEnum::SUPER_ADMIN),
-            new \App\Exceptions\Api\UnauthorizedActionException()
+            \Auth::user()->hasRole(RolesEnum::SUPER_ADMIN),
+            new \App\Exceptions\UnauthorizedActionException()
         );
 
         UserService::delete(\Auth::user());

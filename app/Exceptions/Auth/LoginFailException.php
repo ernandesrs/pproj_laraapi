@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Exceptions\Api;
+namespace App\Exceptions\Auth;
 
+use App\Exceptions\BaseException;
 use Exception;
 
-class NotFoundException extends Exception
+class LoginFailException extends Exception
 {
     use BaseException;
 
@@ -14,7 +15,7 @@ class NotFoundException extends Exception
      */
     function message(): string
     {
-        return 'Not found.';
+        return 'Login credentials is invalid.';
     }
 
     /**
@@ -23,6 +24,6 @@ class NotFoundException extends Exception
      */
     function status(): int
     {
-        return 404;
+        return 422;
     }
 }

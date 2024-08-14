@@ -25,8 +25,8 @@ class Role extends \Spatie\Permission\Models\Role
     static function defaultRoles(): Collection
     {
         $roles = Collection::make([]);
-        $namespaceBase = '\App\Enums\Api\Roles';
-        $basePath = app_path('\Enums\Api\Roles');
+        $namespaceBase = '\App\Enums\Roles';
+        $basePath = app_path('\Enums\Roles');
 
         Collection::make(\File::allFiles($basePath))->map(function ($v, $k) use ($namespaceBase, &$roles) {
             $enumClass = $namespaceBase . (empty($v->getRelativePath()) ? '' : '\\') . $v->getRelativePath() . '\\' . $v->getFilenameWithoutExtension();

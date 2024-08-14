@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Enums\Api\Roles\RolesEnum;
+use App\Enums\Roles\RolesEnum;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         User::find(2)->assignRole(RolesEnum::USER_ADMIN);
 
         // Create permissions
-        Permission::allowedPermissions()->map(function ($allowedPermission, $allowedPermissionKey) {
+        Permission::avaiablePermissions()->map(function ($allowedPermission, $allowedPermissionKey) {
             Collection::make($allowedPermission)->map(function ($permission) {
                 Permission::create(['guard_name' => 'web', 'name' => $permission->value]);
             });

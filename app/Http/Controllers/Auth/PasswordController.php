@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -21,7 +21,7 @@ class PasswordController extends Controller
             'email' => ['required', 'email', 'exists:users,email']
         ]);
 
-        throw_if($validator->fails(), new \App\Exceptions\Api\InvalidDataException());
+        throw_if($validator->fails(), new \App\Exceptions\InvalidDataException());
 
         $userToSendLink = User::where('email', '=', $validator->validated()['email'])->firstOrFail();
 
@@ -34,7 +34,7 @@ class PasswordController extends Controller
         if ($userToken) {
             throw_if(
                 $userToken->created_at >= now()->subMinutes($minMinutesToResend),
-                new \App\Exceptions\Api\Auth\PasswordResetEmailHasBeenSentException()
+                new \App\Exceptions\Auth\PasswordResetEmailHasBeenSentException()
             );
 
             $userToken->delete();
@@ -60,7 +60,7 @@ class PasswordController extends Controller
             ->where('token', \Str::fromBase64($validated['token']))
             ->first();
 
-        throw_if(!$userToken, new \App\Exceptions\Api\Auth\InvalidTokenException());
+        throw_if(!$userToken, new \App\Exceptions\Auth\InvalidTokenException());
 
         $user = $userToken->user()->firstOrFail();
         $user->password = $validated['password'];

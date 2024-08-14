@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Exceptions\Api\Auth;
+namespace App\Exceptions;
 
-use App\Exceptions\Api\BaseException;
 use Exception;
 
-class UnauthenticatedException extends Exception
+class InvalidDataException extends Exception
 {
     use BaseException;
 
@@ -15,7 +14,7 @@ class UnauthenticatedException extends Exception
      */
     function message(): string
     {
-        return 'You are not authenticated.';
+        return 'Invalid data has found';
     }
 
     /**
@@ -24,6 +23,6 @@ class UnauthenticatedException extends Exception
      */
     function status(): int
     {
-        return 401;
+        return 422;
     }
 }

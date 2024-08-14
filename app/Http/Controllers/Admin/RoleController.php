@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace App\Http\Controllers\Admin;
 
-use App\Exceptions\Api\InvalidDataException;
-use App\Http\Controllers\Api\WithFilter;
+use App\Exceptions\InvalidDataException;
+use App\Http\Controllers\WithFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GiveOrRevokePemissionRequest;
 use App\Http\Resources\Admin\RoleResource;

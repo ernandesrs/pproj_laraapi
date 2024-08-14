@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\Roles\RolesEnum;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
@@ -97,6 +98,6 @@ abstract class BasePolicy
      */
     protected function isSuperUser(User $user)
     {
-        return $user->hasRole(\App\Enums\Api\Roles\RolesEnum::SUPER_ADMIN);
+        return $user->hasRole(RolesEnum::SUPER_ADMIN);
     }
 }

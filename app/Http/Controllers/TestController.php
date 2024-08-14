@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 class TestController extends Controller
 {
     /**
-     * Admin access test
+     * Test
      * @return \Illuminate\Http\JsonResponse
      */
     function test(): \Illuminate\Http\JsonResponse
     {
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
 }

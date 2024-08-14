@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Enums\Api\Permissions\RolePermissionsEnum;
-use App\Enums\Api\Roles\RolesEnum;
+use App\Enums\Permissions\RolePermissionsEnum;
+use App\Enums\Roles\RolesEnum;
 
 class RolePolicy extends BasePolicy
 {

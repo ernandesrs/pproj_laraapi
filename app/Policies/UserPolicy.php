@@ -2,8 +2,7 @@
 
 namespace App\Policies;
 
-use App\Enums\Api\Permissions\UserPermissionsEnum;
-use App\Enums\Api\Roles\RolesEnum;
+use App\Enums\Permissions\UserPermissionsEnum;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 

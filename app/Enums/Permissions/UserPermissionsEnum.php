@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums\Api\Permissions;
+namespace App\Enums\Permissions;
 
 enum UserPermissionsEnum: string
 {

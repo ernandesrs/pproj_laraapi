@@ -19,7 +19,7 @@ trait BaseRequest
             if (\Request::is('api/*')) {
                 if ($validator->errors()->count()) {
                     session()->flash("validator_errors", $validator->errors());
-                    throw new \App\Exceptions\Api\InvalidDataException();
+                    throw new \App\Exceptions\InvalidDataException();
                 }
             }
         });

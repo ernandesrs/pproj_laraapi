@@ -28,9 +28,9 @@ class Handler extends ExceptionHandler
                 $exceptionClass = get_class($e);
 
                 $customExceptionClass = match ($exceptionClass) {
-                    \Illuminate\Auth\AuthenticationException::class => \App\Exceptions\Api\Auth\UnauthenticatedException::class,
-                    \Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class => \App\Exceptions\Api\NotFoundException::class,
-                    \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException::class => \App\Exceptions\Api\UnauthorizedActionException::class,
+                    \Illuminate\Auth\AuthenticationException::class => \App\Exceptions\Auth\UnauthenticatedException::class,
+                    \Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class => \App\Exceptions\NotFoundException::class,
+                    \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException::class => \App\Exceptions\UnauthorizedActionException::class,
                     default => null
                 };
 

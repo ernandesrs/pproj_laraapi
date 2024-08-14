@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -21,7 +21,7 @@ class VerificationController extends Controller
             'token' => ['required', 'string']
         ]);
 
-        throw_if($validator->fails(), new \App\Exceptions\Api\InvalidDataException());
+        throw_if($validator->fails(), new \App\Exceptions\InvalidDataException());
 
         $validated = $validator->validated();
         $userToVerify = User::where('email', '=', $validated['email'])->firstOrFail();
@@ -30,7 +30,7 @@ class VerificationController extends Controller
             ->where('to', '=', 'email_verification')
             ->where('token', '=', \Str::fromBase64($validated['token']))->first();
 
-        throw_if(!$userToken, new \App\Exceptions\Api\Auth\InvalidTokenException());
+        throw_if(!$userToken, new \App\Exceptions\Auth\InvalidTokenException());
 
         $userToVerify->email_verified_at = now();
         if ($userToVerify->save()) {
@@ -53,14 +53,14 @@ class VerificationController extends Controller
             'email' => ['required', 'email', 'exists:users,email']
         ]);
 
-        throw_if($validator->fails(), new \App\Exceptions\Api\InvalidDataException());
+        throw_if($validator->fails(), new \App\Exceptions\InvalidDataException());
 
         $validated = $validator->validated();
         $userToResend = User::where('email', '=', $validated['email'])
             ->whereNull('email_verified_at')
             ->first();
 
-        throw_if(!$userToResend, new \App\Exceptions\Api\Auth\EmailHasAlreadyBeenVerifiedException());
+        throw_if(!$userToResend, new \App\Exceptions\Auth\EmailHasAlreadyBeenVerifiedException());
 
         $userToken = $userToResend
             ->userTokens()
@@ -69,7 +69,7 @@ class VerificationController extends Controller
 
         $minMinutesToResend = 5;
         if ($userToken) {
-            throw_if($userToken->created_at >= now()->subMinutes($minMinutesToResend), new \App\Exceptions\Api\Auth\VerificationEmailHasBeenSentException());
+            throw_if($userToken->created_at >= now()->subMinutes($minMinutesToResend), new \App\Exceptions\Auth\VerificationEmailHasBeenSentException());
 
             $userToken->delete();
         }

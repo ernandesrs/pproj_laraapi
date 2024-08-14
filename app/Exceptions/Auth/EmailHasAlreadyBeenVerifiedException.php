@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions\Api\Auth;
+namespace App\Exceptions\Auth;
 
-use App\Exceptions\Api\BaseException;
+use App\Exceptions\BaseException;
 use Exception;
 
-class PasswordResetEmailHasBeenSentException extends Exception
+class EmailHasAlreadyBeenVerifiedException extends Exception
 {
     use BaseException;
 
@@ -15,7 +15,7 @@ class PasswordResetEmailHasBeenSentException extends Exception
      */
     function message(): string
     {
-        return 'An email has already been sent a short time ago.';
+        return 'Email is already verified.';
     }
 
     /**

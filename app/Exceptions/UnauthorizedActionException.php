@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Exceptions\Api\Auth;
+namespace App\Exceptions;
 
-use App\Exceptions\Api\BaseException;
 use Exception;
 
-class LoginFailException extends Exception
+class UnauthorizedActionException extends Exception
 {
     use BaseException;
 
@@ -15,7 +14,7 @@ class LoginFailException extends Exception
      */
     function message(): string
     {
-        return 'Login credentials is invalid.';
+        return 'This action is not authorized.';
     }
 
     /**
@@ -24,6 +23,6 @@ class LoginFailException extends Exception
      */
     function status(): int
     {
-        return 422;
+        return 403;
     }
 }

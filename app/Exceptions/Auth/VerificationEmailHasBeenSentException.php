@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Exceptions\Api;
+namespace App\Exceptions\Auth;
 
+use App\Exceptions\BaseException;
 use Exception;
 
-class InvalidDataException extends Exception
+class VerificationEmailHasBeenSentException extends Exception
 {
     use BaseException;
 
@@ -14,7 +15,7 @@ class InvalidDataException extends Exception
      */
     function message(): string
     {
-        return 'Invalid data has found';
+        return 'An email has already been sent a short time ago.';
     }
 
     /**
@@ -23,6 +24,6 @@ class InvalidDataException extends Exception
      */
     function status(): int
     {
-        return 422;
+        return 401;
     }
 }
