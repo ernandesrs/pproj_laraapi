@@ -45,6 +45,8 @@ class RoleController extends Controller
      */
     function givePermissions(GiveOrRevokePemissionRequest $request, Role $role): \Illuminate\Http\JsonResponse
     {
+        $this->authorize('update', $role);
+
         $validated = $request->validated();
 
         $role->givePermissionTo($validated['permissions']);
@@ -62,6 +64,8 @@ class RoleController extends Controller
      */
     function revokePermissions(GiveOrRevokePemissionRequest $request, Role $role): \Illuminate\Http\JsonResponse
     {
+        $this->authorize('update', $role);
+
         $validated = $request->validated();
 
         /**
