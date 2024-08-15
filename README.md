@@ -3,7 +3,8 @@ Lara Api é uma API RESTful construída com Laravel 11 para fins de estudos na c
 
     - Autenticação: Login, registro, verificação de conta e recuperação de senha.
     - Gerenciamento de perfil: Atualização de informações de conta, mudança de senha, etc.
-    - Controle de acesso: controle de acesso a áreas logadas baseadas em cargos, onde cada cargo possui suas permissões para executar ações sobre recursos da aplicação.
+    - Controle de acesso: controle de acesso a áreas logadas baseadas em cargos, onde cada cargo
+    possui suas permissões para executar ações sobre recursos da aplicação.
 
 Nesta API foram utilizas o Sanctum para autenticação e o pacote Laravel Permission para garantir a segurança das operações na aplicação.
 
