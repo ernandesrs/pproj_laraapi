@@ -145,7 +145,6 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'user' => new UserResource($user),
             'roles' => RoleResource::collection($user->roles()->get())
         ]);
     }
